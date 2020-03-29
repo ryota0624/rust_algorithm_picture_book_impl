@@ -1,9 +1,13 @@
-pub trait Sorter<T> where
-    T: Ord + Copy {
+mod bubble_sort;
+mod selection_sort;
+mod insertion_sort;
+
+
+pub trait Sorter<T> {
     fn sort(self, _: Vec<T>) -> Vec<T>;
 }
 
-pub fn sorter_test<T: Sorter<i64> + Copy>(sorter: T) {
+fn sorter_test<T: Sorter<i64> + Copy>(sorter: T) {
     let sorted = sorter.sort(vec![2, 1, 3]);
     assert_eq!(sorted, vec![1, 2, 3]);
 

@@ -1,11 +1,11 @@
 use std::cmp::Ord;
-use super::sort;
+use crate::sort::{Sorter, sorter_test};
 
 
 #[derive(Debug, Copy, Clone)]
 struct BubbleSorter;
 
-impl<T> sort::Sorter<T> for BubbleSorter where T: Ord + Copy {
+impl<T> Sorter<T> for BubbleSorter where T: Ord + Copy {
     fn sort(self, list: Vec<T>) -> Vec<T> {
         let mut result: Vec<T> = list.clone();
         let len = result.len();
@@ -32,5 +32,5 @@ impl<T> sort::Sorter<T> for BubbleSorter where T: Ord + Copy {
 
 #[test]
 fn test() {
-    sort::sorter_test(BubbleSorter)
+    sorter_test(BubbleSorter)
 }
