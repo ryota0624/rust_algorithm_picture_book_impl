@@ -3,7 +3,7 @@ mod selection_sort;
 mod insertion_sort;
 
 
-pub trait Sorter<T> {
+pub trait Sorter<T: Ord> {
     fn sort(self, _: Vec<T>) -> Vec<T>;
 }
 
