@@ -2,26 +2,12 @@ use crate::search::{Searcher, search_test};
 use crate::sort::Sorter;
 
 use crate::sort::bubble_sort::BubbleSorter;
-use std::marker::PhantomData;
 
 #[derive(Debug, Copy, Clone)]
-struct BinarySearcher<T, S> where
-    T: Ord,
-    S: Sorter<T>
-{
-    sorter: S,
-    phantom: PhantomData<T>,
-}
+struct BinarySearcher;
 
-impl<T, S> BinarySearcher<T, S>
-    where T: Ord + Copy, S: Sorter<T> + Copy {
-    fn new(sorter: S) -> BinarySearcher<T, S> {
-        BinarySearcher {
-            sorter,
-            phantom: PhantomData,
-        }
-    }
-    fn search_index_from_sorted(self, list: Vec<T>, target: &T) -> bool {
+impl BinarySearcher {
+    fn search_index_from_sorted<T: Ord + Copy>(self, list: Vec<T>, target: &T) -> bool {
         let cursor = list.len() / 2;
         list.get(cursor).map(|found| {
             match found {
@@ -40,16 +26,16 @@ impl<T, S> BinarySearcher<T, S>
     }
 }
 
-impl<T, S> Searcher<T> for BinarySearcher<T, S>
-    where T: Ord + Copy + std::fmt::Debug, S: Sorter<T> + Copy {
+impl<T> Searcher<T> for BinarySearcher
+    where T: Ord + Copy {
     fn exist(self, list: Vec<T>, target: T) -> bool {
-        let sorted = self.sorter.sort(list);
+        let sorted = BubbleSorter.sort(list);
         self.search_index_from_sorted(sorted, &target)
     }
 }
 
 #[test]
 fn test() {
-    search_test(BinarySearcher::new(BubbleSorter))
+    search_test(BinarySearcher)
 }
 
