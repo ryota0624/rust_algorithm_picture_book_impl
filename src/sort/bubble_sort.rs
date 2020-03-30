@@ -3,7 +3,7 @@ use crate::sort::{Sorter, sorter_test};
 
 
 #[derive(Debug, Copy, Clone)]
-struct BubbleSorter;
+pub struct BubbleSorter;
 
 impl<T> Sorter<T> for BubbleSorter where T: Ord + Copy {
     fn sort(self, list: Vec<T>) -> Vec<T> {

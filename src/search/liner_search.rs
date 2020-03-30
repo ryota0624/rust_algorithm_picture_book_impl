@@ -4,13 +4,13 @@ use crate::search::{Searcher, search_test};
 struct LinerSearcher;
 
 impl<T: Eq> Searcher<T> for LinerSearcher {
-    fn search_index(self, list: Vec<T>, target: T) -> Option<usize> {
+    fn exist(self, list: Vec<T>, target: T) -> bool {
         for (base_index, val) in list.iter().enumerate() {
             if val.eq(&target) {
-                return Some(base_index)
+                return true
             }
         }
-        return None
+        return false
     }
 }
 

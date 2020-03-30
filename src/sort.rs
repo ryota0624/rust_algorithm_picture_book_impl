@@ -1,9 +1,9 @@
-mod bubble_sort;
+pub mod bubble_sort;
 mod selection_sort;
 mod insertion_sort;
 
 
-pub trait Sorter<T: Ord> {
+pub trait Sorter<T: Ord>: Copy {
     fn sort(self, _: Vec<T>) -> Vec<T>;
 }
 

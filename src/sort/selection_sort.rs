@@ -22,7 +22,7 @@ impl SelectionSorter {
     }
 }
 
-//
+
 impl<T> Sorter<T> for SelectionSorter where T: Ord + Copy {
     fn sort(self, list: Vec<T>) -> Vec<T> {
         if list.is_empty() {
