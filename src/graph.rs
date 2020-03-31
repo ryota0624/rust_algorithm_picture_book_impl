@@ -24,6 +24,10 @@ impl OneWayGraph {
         };
     }
 
+    fn label(&self) -> String {
+        self.label.to_string()
+    }
+
     fn add_child(self, child: OneWayGraph) -> OneWayGraph {
         let mut updated = Vec::from(self.children);
         updated.append(vec![child].as_mut());
