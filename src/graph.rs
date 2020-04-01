@@ -1,4 +1,4 @@
-mod breadth_first_search;
+mod search;
 
 #[derive(Debug, Clone, Eq)]
 struct OneWayGraph {
