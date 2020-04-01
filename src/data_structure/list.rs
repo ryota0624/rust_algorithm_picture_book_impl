@@ -27,10 +27,10 @@ impl<T> ListItem<T> {
         }
     }
 
-    fn select_last(&self) -> Box<&ListItem<T>> {
+    fn select_last(&self) -> Box<ListItem<T>> {
         match &self.next.as_ref() {
             Some(n) => n.select_last(),
-            None => &Box::new(self)
+            None => Box::new(ListItem{ value: self.value, next: Box::new(None) })
         }
     }
 }
@@ -62,7 +62,7 @@ impl<T> List<T> {
         }
     }
 
-    fn last_item(self) -> Option<Box<&ListItem<T>>> {
+    fn last_item(self) -> Option<Box<ListItem<T>>> {
         self.head.map(|h| h.select_last())
     }
 }
