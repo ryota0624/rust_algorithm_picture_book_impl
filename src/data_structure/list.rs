@@ -1,10 +1,10 @@
 struct List<T> {
-    head: Option<Box<ListItem<T>>>
+    head: Box<Option<ListItem<T>>>
 }
 
 struct ListItem<T> {
     value: T,
-    next: Option<Box<ListItem<T>>>,
+    next: Box<Option<ListItem<T>>>,
 }
 
 impl<T> ListItem<T> {
@@ -15,7 +15,7 @@ impl<T> ListItem<T> {
     }
 
     fn replace_next(&mut self, item: ListItem<T>) {
-        self.next = Some(Box::new(item));
+        self.next = Box::new(Some(item))
     }
 
     fn index_at(&self, i: usize) -> Option<&T> {
@@ -27,10 +27,10 @@ impl<T> ListItem<T> {
         }
     }
 
-    fn select_last(&self) -> &Box<ListItem<T>> {
-        match &self.next {
+    fn select_last(&self) -> Box<&ListItem<T>> {
+        match &self.next.as_ref() {
             Some(n) => n.select_last(),
-            None => &Box::new(*self)
+            None => &Box::new(self)
         }
     }
 }
@@ -46,23 +46,23 @@ impl<T> List<T> {
     }
 
     fn append(&mut self, value: T) {
-        match &self.head {
+        match &self.head.as_ref() {
             Some(h) =>
                 {
                     let mut last = h.select_last();
                     last.replace_next(ListItem {
                         value,
-                        next: None,
+                        next: Box::new(None),
                     });
                 }
-            None => self.head = Some(Box::new(ListItem {
+            None => self.head = Box::new(Some(ListItem {
                 value,
-                next: None,
+                next: Box::new(None),
             }))
         }
     }
 
-    fn last_item(self) -> Option<&Box<ListItem<T>>> {
+    fn last_item(self) -> Option<Box<&ListItem<T>>> {
         self.head.map(|h| h.select_last())
     }
 }
@@ -70,11 +70,11 @@ impl<T> List<T> {
 #[test]
 fn test_length() {
     let mut list: List<i32> = List {
-        head: Some(Box::new(ListItem {
+        head: Box::new(Some(ListItem {
             value: 2,
-            next: Some(Box::new(ListItem {
+            next: Box::new(Some(ListItem {
                 value: 3,
-                next: None,
+                next: Box::new(None),
             })),
         }))
     };
